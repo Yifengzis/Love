@@ -30,27 +30,21 @@
 * 幸福是一辈子的事，经不起三心二意。我会用手中的所有希望为你画下最美丽的蓝天，最幸福的白鸽！</span><br/><span class="say"></span><br/><span class="say">
 * 我爱你，李志楠！！！</span><br/><span class="say"></span><br/><span class="say"><span class="space"></span></font></div>
             </div>
-            <div id="clock-box">我们已经在一起...
-            <div id="clock"></div></div>
+            <div id="clock-box">我们已经在一起...<div id="clock"></div></div>
             <canvas width="1100" height="680" id="canvas"></canvas>
         </div>
     </div>
 <script>
-
     (function(){
         var canvas = $('#canvas');
-		
         if (!canvas[0].getContext) {
             $("#error").show();
             return false;
         }
-
         var width = canvas.width();
         var height = canvas.height();
-        
         canvas.attr("width", width);
         canvas.attr("height", height);
-
         var opts = {
             seed: {
                 x: width / 2 - 20,
@@ -86,12 +80,10 @@
                 speed: 10,
             }
         }
-
         var tree = new Tree(canvas[0], width, height, opts);
         var seed = tree.seed;
         var foot = tree.footer;
         var hold = 1;
-
         canvas.click(function(e) {
             var offset = canvas.offset(), x, y;
             x = e.pageX - offset.left;
@@ -108,7 +100,6 @@
             y = e.pageY - offset.top;
             canvas.toggleClass('hand', seed.hover(x, y));
         });
-
         var seedAnimate = eval(Jscex.compile("async", function () {
             seed.draw();
             while (hold) {
@@ -124,21 +115,18 @@
                 $await(Jscex.Async.sleep(10));
             }
         }));
-
         var growAnimate = eval(Jscex.compile("async", function () {
             do {
     	        tree.grow();
                 $await(Jscex.Async.sleep(10));
             } while (tree.canGrow());
         }));
-
         var flowAnimate = eval(Jscex.compile("async", function () {
             do {
     	        tree.flower(2);
                 $await(Jscex.Async.sleep(10));
             } while (tree.canFlower());
         }));
-
         var moveAnimate = eval(Jscex.compile("async", function () {
             tree.snapshot("p1", 240, 0, 610, 680);
             while (tree.move("p1", 500, 0)) {
@@ -147,14 +135,12 @@
             }
             foot.draw();
             tree.snapshot("p2", 500, 0, 610, 680);
-
             // 会有闪烁不得意这样做, (＞﹏＜)
             canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
             canvas.css("background", "#ffe");
             $await(Jscex.Async.sleep(300));
             canvas.css("background", "none");
         }));
-
         var jumpAnimate = eval(Jscex.compile("async", function () {
             var ctx = tree.ctx;
             while (true) {
@@ -164,15 +150,13 @@
                 $await(Jscex.Async.sleep(25));
             }
         }));
-
         var textAnimate = eval(Jscex.compile("async", function () {
 		    var together = new Date();
 		    together.setFullYear(2018,00,29); 				//时间年月日
-		    together.setHours(00);					//小时	
-		    together.setMinutes(00);					//分钟
-		    together.setSeconds(00);					//秒前一位
-		    together.setMilliseconds(00);				//秒第二位
-
+		    together.setHours(00);					        //小时	
+		    together.setMinutes(00);					    //分钟
+		    together.setSeconds(00);				       	//秒前一位
+		    together.setMilliseconds(00);				    //秒第二位
 		    $("#code").show().typewriter();
             $("#clock-box").fadeIn(500);
             while (true) {
@@ -180,41 +164,19 @@
                 $await(Jscex.Async.sleep(1000));
             }
         }));
-
         var runAsync = eval(Jscex.compile("async", function () {
             $await(seedAnimate());
             $await(growAnimate());
             $await(flowAnimate());
             $await(moveAnimate());
-
             textAnimate().start();
-
             $await(jumpAnimate());
         }));
-
         runAsync().start();
     })();
-    </script>     				     </div>
-				</div>
-			</div>
-</div>
-	<div class="bg1">	
-		<div class="main">
-			<footer style="line-height:20px">
-                <div id="copyright">
-                    <div align="center"> <a href='' target="_blank"></a> 
-                    <a href="" target="_blank"></a>
-                    <a href="" target="_blank"></a>
-                    </div>
-                  </object>
-                </div>
-		</div>
-	</div>
-</div>
+</script>
 <audio controls="controls" hidden="hidden" autoplay="autoplay" loop="loop">
 	<source src="laobo.mp3" type="audio/mp3" />
 </audio>
-
-
 </body>
 </html>
